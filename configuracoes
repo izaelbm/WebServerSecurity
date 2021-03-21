@@ -1,0 +1,25 @@
+sudo apt-get update #Atualizar pacotes do sistema
+sudo apt-get upgrade #Atualizar versões dos pacores do sistema
+
+//Ajustes Servidor SSH
+sudo nano /etc/ssh/sshd_config #Arquivo de configurações do SSH
+Descomentar linha #Port 22 e ajustar para Port 6522
+sudo /etc/init.d/ssh restart #Reiniciar serviço de SSH para aplicar alteração na porta.
+
+// Instalação do Mysql Community
+
+sudo apt-get update #Atualizar pacotes do sistema
+sudo apt-get install -y gnupg # Instalando o pacote gnupg
+wget https://dev.mysql.com/get/mysql-apt-config_0.8.16-1_all.deb #Efetuando o downloado do .deb mysql server
+sudo dpkg -i mysql-apt-config_0.8.16-1_all.deb  #extraindo 
+sudo apt-get update #Atualizar pacotes do sistema
+sudo apt-get -f install -y mysql-community-server # Instalando o mysql-server
+systemctl status mysql.service #Conferindo o status do servicos
+netstat -nlpt #listando portas abertas e serviços rodando no servidor
+mysql_secure_installation #aplicar configurações de segurança do mysql-server
+sudo nano /etc/mysql/mysql.conf.d/mysqld.cnf #adicionar host de loopback 
+adicione no final *bind-address=127.0.0.1 #adicionar host de loopback
+systemctl restart mysql #reiniciando o servico
+mysql -u root -p #Efetuando login no mysql-server
+CREATE USER 'dev'@'localhost' IDENTIFIED BY 'B@nc0Mysq1'; // 'dev' => usuario de sua escolha / 'localhost' se tiver um dominio adicione o dominio / BY 'B@nc0Mysq1' defina a senha do usuario
+
