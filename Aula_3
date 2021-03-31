@@ -1,0 +1,13 @@
+#Instalar o pacote deboostrap para que possamos gerenciar o chroot
+sudo apt-get install -y debootstrap
+
+#criar o diretorio onde vamos instalar o servidor Web
+cd /home
+sudo mkdir -p websrv/{proc,bin,lib,lib64}
+sudo mkdir -p websrv/dev/pts/
+
+#instalar pacotes para o Chroot
+sudo debootstrap buster websrv/
+sudo cp -v /bin/* websrv/bin/
+sudo cp -v /lib/x86_64-linux-gnu/* websrv/lib/
+sudo cp -v /lib64/* websrv/lib64/
