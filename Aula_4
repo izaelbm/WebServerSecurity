@@ -1,0 +1,27 @@
+#montar processos
+sudo mount --bind /proc/ websrv/proc/
+sudo mount --bind /dev/pts/ websrv/dev/pts/
+
+#Logar como chroot
+sudo chroot websrv/
+
+#Instalar SSH dentro do Chroot	
+apt-get install -y openssh-server
+
+#Mudar porta ssh
+/etc/ssh/sshd_config //mudamos para 65523
+sudo /usr/sbin/chroot websrv/ /etc/init.d/ssh restart
+
+#criar usuario para acesso ao diretorio do apache
+adduser dev
+
+#adicionar usuario ao sudoers
+apt-get install -y sudo
+nano /etc/sudoers
+
+#montar processos apos instalar ssh
+exit
+/usr/sbin/chroot /home/websrv /etc/init.d/ssh start
+
+#logar via ssh com o novo usuario criado
+ssh dev@192.168.18.35 -p 65523
