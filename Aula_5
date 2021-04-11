@@ -1,0 +1,19 @@
+#Instalar o Apache
+sudo apt-get install apache2 -y
+sudo nano /etc/hostname #127.0.0.1 localhost
+sudo nano /etc/hosts #127.0.0.1 localhost
+echo "ServerName localhost" | tee /etc/apache2/conf-available/fqdn.conf && a2enconf fqdn
+apt-get install -y php7.3 libapache2-mod-php7.3
+
+ps aux | grep "apache2.conf"
+sudo kill PID #primeiro processo
+
+sudo apachectl -f /etc/apache2/apache2.conf
+
+sudo apt-get install -y php7.3-mysql php7.3-curl php7.3-gd php7.3-intl
+sudo apt-get install -y php-pear php7.3-imagick php7.3-imap
+sudo apt-get install -y php7.3-memcache php7.3-ps php7.3-pspell
+sudo apt-get install -y php7.3-recode php7.3-snmp php7.3-sqlite php7.3-tidy php7.3-xmlrpc php7.3-xsl
+   
+
+
