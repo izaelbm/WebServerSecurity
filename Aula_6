@@ -1,0 +1,32 @@
+#Logar como chroot
+sudo chroot websrv/
+
+#Instalar FTP dentro do chroot	
+apt-get install vsftpd
+cp /etc/vsftpd.conf /etc/vsftpd.conf.orig^
+
+#mude a porta do vsftpd para 65521 //
+/etc/vsftpd_conf // listen_port=65521
+/etc/vsftpd_conf // write_enable=YES
+/etc/vsftpd_conf // chroot_local_user = SIM
+/etc/vsftpd_conf // chroot_list_enable = SIM
+/etc/vsftpd_conf //chroot_list_file = /etc/vsftpd.chroot_list
+nano /etc/vsftpd.conf
+
+#Iniciar o Serviço
+/etc/init.d/vsftpd start
+
+#criar um usuario para o FTP
+mkdir /var/ftp/
+mkdir /var/ftp/devftp
+
+#Montar diretorio do apache para o usuario
+mount --bind /var/www/html/ /var/ftp/devftp/
+
+#criar usuario e mudar o diretorio raiz do usuario do FTP
+useradd devftp
+passwd devftp
+usermod -d /var/ftp/devftp/ devftp
+
+#Reiniciar o Serviço
+/etc/init.d/vsftpd restart
