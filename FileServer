@@ -1,0 +1,59 @@
+** Instalar Ubunto/Debian Server
+
+#Adicionar Usuarios
+	sudo adduser *nome usuario
+
+#Adicionar Diretorios
+	mkdir srv/administrativo
+
+#Permissões em diretorios
+	sudo chmod 777 -R srv/administrativo
+
+#Atualizar pacotes
+	sudo apt-get update
+
+#Instalar o samba	
+	sudo apt-get install samba
+
+#definir usuario/senha para samba
+	sudo smbpasswd -a usuario
+	
+#configurar smb.conf
+	*criar backup do arquivo
+	sudo cp /etc/samba/smb.conf /etc/samba/smb.conf.bkp
+
+	sudo nano /etc/samba/smb.conf
+	
+	*definir nome do grupo
+	workgroup = nomedaempresa
+	netbios = Zer01TI
+	
+	server string = %h server (Arquivos)
+	
+#configurar Compartilhamento
+
+# Parâmetros Locais
+               
+[Gestao]
+        comment = Arquivos de usuários
+        path = /arquivos/gestao
+        browseable = no
+        public = no
+        writable = no
+        guest ok = no
+        write list = evelyn,sampaio
+        create mask = 0775
+ directory mask = 0775
+                        
+[Publico]
+        comment = Pasta Publico
+        path = /arquivos/publico
+        browseable = yes
+        writable = yes
+        guest ok = no
+        public = yes
+        create mode = 0777
+        directory mode = 0777
+  
+sudo systemctl restart smbd.service nmbd.service
+	
